@@ -1,0 +1,633 @@
+/*
+ * style.css - Tampilan Tabunganku
+ *
+ * Menggunakan pendekatan mobile-first:
+ * desain untuk HP dulu, baru untuk layar lebih besar.
+ *
+ * CSS Variables (seperti konstanta/variabel di PHP)
+ * digunakan agar gampang ganti tema warna.
+ */
+
+/* ============================================================
+   VARIABEL WARNA DAN UKURAN
+   Definisikan sekali di sini, pakai di mana saja
+   ============================================================ */
+:root {
+  --color-primary: #4CAF50;       /* Hijau utama (tambah/nabung) */
+  --color-primary-dark: #388E3C;  /* Hijau gelap (hover) */
+  --color-danger: #f44336;        /* Merah (ambil/hapus) */
+  --color-danger-dark: #c62828;   /* Merah gelap (hover) */
+  --color-bg: #f0f4f0;            /* Abu-abu kehijauan (latar) */
+  --color-card: #ffffff;          /* Putih (kartu) */
+  --color-text: #212121;          /* Hitam gelap (teks utama) */
+  --color-text-light: #757575;    /* Abu-abu (teks sekunder) */
+  --color-border: #e0e0e0;        /* Abu-abu muda (garis) */
+  --radius: 12px;                 /* Sudut membulat kartu */
+  --shadow: 0 2px 8px rgba(0,0,0,0.10); /* Bayangan kartu */
+  --max-width: 480px;             /* Lebar maksimum konten */
+}
+
+/* ============================================================
+   RESET DAN DASAR
+   Menghapus style bawaan browser yang berbeda-beda
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box; /* Lebar sudah termasuk padding dan border */
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  padding-bottom: 40px; /* Ruang di bawah untuk scroll */
+}
+
+/* ============================================================
+   INSTALL BANNER
+   Banner yang muncul di atas saat PWA bisa diinstall
+   ============================================================ */
+#install-banner {
+  display: none; /* Disembunyikan dulu, ditampilkan via JS */
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background-color: #1a237e; /* Biru gelap */
+  color: white;
+  padding: 12px 16px;
+  font-size: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+#install-banner .banner-text {
+  flex: 1;
+  font-weight: 500;
+}
+
+#install-banner .btn-install {
+  background: white;
+  color: #1a237e;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+#install-banner .btn-dismiss {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+/* ============================================================
+   HEADER
+   Bagian atas halaman dengan judul dan tombol pengaturan
+   ============================================================ */
+header {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-settings {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.btn-settings:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+/* ============================================================
+   CONTAINER UTAMA
+   Pembungkus semua konten dengan lebar maksimum
+   ============================================================ */
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ============================================================
+   KARTU SALDO
+   Kartu besar yang menampilkan saldo saat ini
+   ============================================================ */
+.balance-card {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: white;
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+.balance-card .label {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.balance-card .amount {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  transition: color 0.3s;
+}
+
+.balance-card .amount.negative {
+  color: #ffcdd2; /* Merah muda jika saldo minus */
+}
+
+/* ============================================================
+   KARTU (komponen reusable)
+   Dipakai untuk form, riwayat, dll
+   ============================================================ */
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--color-text);
+}
+
+/* ============================================================
+   TOMBOL MODE (TAMBAH / AMBIL)
+   Dua tombol besar untuk pilih mode transaksi
+   ============================================================ */
+.mode-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn-mode {
+  padding: 14px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  background: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--color-text-light);
+}
+
+.btn-mode.add-mode {
+  border-color: var(--color-border);
+}
+
+.btn-mode.minus-mode {
+  border-color: var(--color-border);
+}
+
+/* State aktif untuk tombol tambah */
+.btn-mode.add-mode.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 3px 10px rgba(76, 175, 80, 0.4);
+}
+
+/* State aktif untuk tombol ambil */
+.btn-mode.minus-mode.active {
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+  color: white;
+  box-shadow: 0 3px 10px rgba(244, 67, 54, 0.4);
+}
+
+/* ============================================================
+   FORM TRANSAKSI
+   Input jumlah, catatan, foto, dan lokasi
+   ============================================================ */
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-light);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 16px; /* 16px mencegah zoom otomatis di iOS */
+  color: var(--color-text);
+  background: #fafafa;
+  transition: border-color 0.2s;
+  -webkit-appearance: none; /* Hilangkan style bawaan iOS */
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: white;
+}
+
+/* Area aksi (kamera dan lokasi) */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.btn-icon {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  background: #fafafa;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--color-text-light);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-icon:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: #f1f8f1;
+}
+
+.btn-icon.active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: #e8f5e9;
+}
+
+/* Preview foto */
+#photo-preview {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 2px solid var(--color-border);
+}
+
+/* Info lokasi */
+#location-info {
+  font-size: 13px;
+  color: var(--color-primary-dark);
+  margin-bottom: 10px;
+  min-height: 18px;
+  font-weight: 500;
+}
+
+/* Tombol simpan besar */
+.btn-save {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--color-primary);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.btn-save:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(76,175,80,0.4);
+}
+
+.btn-save:active {
+  transform: translateY(0);
+}
+
+/* Tombol simpan warna merah saat mode ambil */
+.btn-save.danger {
+  background: var(--color-danger);
+}
+
+.btn-save.danger:hover {
+  background: var(--color-danger-dark);
+  box-shadow: 0 4px 12px rgba(244,67,54,0.4);
+}
+
+/* ============================================================
+   MODAL PENGATURAN
+   Overlay di atas konten
+   ============================================================ */
+.modal-overlay {
+  display: none; /* Disembunyikan dulu */
+  position: fixed;
+  inset: 0; /* Shorthand untuk top/right/bottom/left: 0 */
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: flex-end; /* Muncul dari bawah (sheet) */
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal-sheet {
+  background: white;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-radius: 16px 16px 0 0;
+  padding: 24px 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.btn-close-modal {
+  background: #f5f5f5;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-section {
+  margin-bottom: 20px;
+}
+
+.settings-section label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-light);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.settings-section input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+}
+
+.settings-section input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.btn-danger {
+  width: 100%;
+  padding: 13px;
+  border: 2px solid var(--color-danger);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-danger);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 16px 0;
+}
+
+.notif-status {
+  font-size: 13px;
+  color: var(--color-text-light);
+  margin-top: 6px;
+}
+
+/* ============================================================
+   RIWAYAT TRANSAKSI
+   Daftar semua transaksi yang pernah dilakukan
+   ============================================================ */
+.history-empty {
+  text-align: center;
+  color: var(--color-text-light);
+  padding: 30px 0;
+  font-size: 14px;
+}
+
+.history-empty .empty-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+/* Setiap baris transaksi */
+.transaction-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+/* Indikator warna di kiri */
+.transaction-indicator {
+  width: 4px;
+  min-width: 4px;
+  height: 44px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.transaction-item.add .transaction-indicator {
+  background: var(--color-primary);
+}
+
+.transaction-item.minus .transaction-indicator {
+  background: var(--color-danger);
+}
+
+.transaction-body {
+  flex: 1;
+}
+
+.transaction-amount {
+  font-size: 16px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.transaction-item.add .transaction-amount {
+  color: var(--color-primary-dark);
+}
+
+.transaction-item.minus .transaction-amount {
+  color: var(--color-danger);
+}
+
+.transaction-note {
+  font-size: 13px;
+  color: var(--color-text);
+  display: block;
+  margin-bottom: 3px;
+}
+
+.transaction-meta {
+  font-size: 11px;
+  color: var(--color-text-light);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.transaction-thumb {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* ============================================================
+   UPDATE BANNER (Service Worker baru tersedia)
+   ============================================================ */
+#update-banner {
+  display: none;
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a237e;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  z-index: 300;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  gap: 12px;
+  align-items: center;
+  max-width: calc(var(--max-width) - 32px);
+  width: calc(100% - 32px);
+  cursor: pointer;
+}
+
+#update-banner.show {
+  display: flex;
+}
+
+/* ============================================================
+   RESPONSIVE: LAYAR LEBIH BESAR (tablet/desktop)
+   ============================================================ */
+@media (min-width: 600px) {
+  main {
+    padding: 24px 16px;
+  }
+
+  .balance-card .amount {
+    font-size: 44px;
+  }
+
+  header h1 {
+    font-size: 22px;
+  }
+}

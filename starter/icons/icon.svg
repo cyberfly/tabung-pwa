@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <!-- Latar belakang hijau dengan sudut membulat -->
+  <rect width="192" height="192" rx="24" fill="#4CAF50"/>
+
+  <!-- Badan celengan babi -->
+  <ellipse cx="96" cy="108" rx="55" ry="45" fill="white" opacity="0.95"/>
+
+  <!-- Kepala celengan babi -->
+  <circle cx="145" cy="88" r="22" fill="white" opacity="0.95"/>
+
+  <!-- Hidung -->
+  <ellipse cx="155" cy="92" rx="9" ry="7" fill="#f8bbd0"/>
+  <circle cx="152" cy="91" r="2.5" fill="#c2185b"/>
+  <circle cx="158" cy="91" r="2.5" fill="#c2185b"/>
+
+  <!-- Mata -->
+  <circle cx="141" cy="82" r="3" fill="#333"/>
+  <circle cx="142" cy="81" r="1" fill="white"/>
+
+  <!-- Telinga -->
+  <ellipse cx="133" cy="70" rx="8" ry="6" fill="white" opacity="0.95"/>
+  <ellipse cx="133" cy="70" rx="5" ry="4" fill="#f8bbd0"/>
+
+  <!-- Slot koin di atas -->
+  <rect x="80" y="60" width="28" height="6" rx="3" fill="#388E3C"/>
+
+  <!-- Kaki celengan -->
+  <rect x="62" y="146" width="14" height="12" rx="5" fill="white" opacity="0.9"/>
+  <rect x="82" y="148" width="14" height="10" rx="5" fill="white" opacity="0.9"/>
+  <rect x="102" y="148" width="14" height="10" rx="5" fill="white" opacity="0.9"/>
+  <rect x="118" y="146" width="14" height="12" rx="5" fill="white" opacity="0.9"/>
+
+  <!-- Ekor -->
+  <path d="M 45 105 Q 35 95 40 85 Q 45 75 38 70" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+</svg>

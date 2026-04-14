@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <!--
+    viewport: Memastikan paparan sesuai pada telefon
+    width=device-width: lebar ikut saiz skrin telefon
+    initial-scale=1.0: tidak zum secara automatik
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Warna bar status pelayar (berkesan di Chrome Android) -->
+  <meta name="theme-color" content="#4CAF50">
+
+  <!-- Meta untuk iOS (Safari tidak sokong manifest sepenuhnya) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Tabungku">
+
+  <title>Tabungku</title>
+
+  <!-- Pautan ke fail manifest.json (kunci utama PWA) -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Ikon untuk iOS (Apple tidak guna manifest untuk ini) -->
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+
+  <!-- Fail CSS kita -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ======================================================
+       BANNER PEMASANGAN
+       Muncul secara automatik apabila pelayar mengesan PWA
+       boleh dipasang. Ditunjukkan/disembunyikan oleh JavaScript.
+       ====================================================== -->
+  <div id="install-banner">
+    <span class="banner-text">📲 Pasang Tabungku pada peranti anda!</span>
+    <button class="btn-install" id="btn-install">Pasang</button>
+    <button class="btn-dismiss" id="btn-dismiss-install" aria-label="Tutup">✕</button>
+  </div>
+
+  <!-- ======================================================
+       PENGEPALA (HEADER)
+       Bahagian atas dengan tajuk dan butang tetapan
+       ====================================================== -->
+  <header>
+    <h1>🐷 Tabungku</h1>
+    <button class="btn-settings" id="btn-settings" aria-label="Tetapan">⚙️</button>
+  </header>
+
+  <!-- ======================================================
+       KANDUNGAN UTAMA
+       Semua kad kandungan berada di dalam <main>
+       ====================================================== -->
+  <main>
+
+    <!-- Kad Baki -->
+    <div class="balance-card">
+      <p class="label">Baki Semasa</p>
+      <p class="amount" id="balance-amount">RM 0.00</p>
+    </div>
+
+    <!-- Butang Pilih Mod (Simpan / Keluarkan) -->
+    <div class="mode-buttons">
+      <button class="btn-mode add-mode active" id="btn-mode-add">
+        ➕ Simpan
+      </button>
+      <button class="btn-mode minus-mode" id="btn-mode-minus">
+        ➖ Keluarkan
+      </button>
+    </div>
+
+    <!-- Borang Input Transaksi -->
+    <div class="card">
+      <h3 id="form-title">Tambah Simpanan</h3>
+
+      <!-- Input Jumlah -->
+      <div class="form-group">
+        <label for="amount-input">Jumlah (RM)</label>
+        <input
+          type="number"
+          id="amount-input"
+          placeholder="Masukkan jumlah..."
+          min="0"
+          step="0.01"
+          inputmode="decimal"
+        >
+      </div>
+
+      <!-- Input Nota -->
+      <div class="form-group">
+        <label for="note-input">Nota (pilihan)</label>
+        <input
+          type="text"
+          id="note-input"
+          placeholder="Contoh: Gaji bulan ini..."
+          maxlength="100"
+        >
+      </div>
+
+      <!-- Butang Kamera dan Lokasi -->
+      <div class="form-actions">
+        <button class="btn-icon" id="btn-camera">
+          📷 Gambar Resit
+        </button>
+        <button class="btn-icon" id="btn-location">
+          📍 Lokasi
+        </button>
+      </div>
+
+      <!--
+        Input fail TERSEMBUNYI untuk kamera.
+        capture="environment" = buka kamera belakang terus.
+        accept="image/*" = hanya fail gambar.
+        Di iOS, ini membuka pilihan kamera/galeri.
+      -->
+      <input
+        type="file"
+        id="camera-input"
+        accept="image/*"
+        capture="environment"
+        style="display: none;"
+      >
+
+      <!-- Pratonton gambar yang dipilih -->
+      <img id="photo-preview" alt="Pratonton gambar resit" style="display: none;">
+
+      <!-- Maklumat lokasi yang direkod -->
+      <p id="location-info"></p>
+
+      <!-- Butang Simpan -->
+      <button class="btn-save" id="btn-save">
+        💾 Simpan Transaksi
+      </button>
+    </div>
+
+    <!-- Rekod Transaksi -->
+    <div class="card">
+      <h3>📋 Rekod Transaksi</h3>
+      <div id="history-list">
+        <!-- Diisi secara automatik oleh JavaScript -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ======================================================
+       MODAL TETAPAN
+       Overlay yang muncul apabila butang ⚙️ diklik.
+       Kelas CSS "show" menukar display: none → flex
+       ====================================================== -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal-sheet">
+
+      <div class="modal-header">
+        <h3>⚙️ Tetapan</h3>
+        <button class="btn-close-modal" id="btn-close-settings" aria-label="Tutup">✕</button>
+      </div>
+
+      <!-- Baki Awal -->
+      <div class="settings-section">
+        <label for="starting-balance-input">Baki Awal (RM)</label>
+        <input
+          type="number"
+          id="starting-balance-input"
+          placeholder="0.00"
+          min="0"
+          step="0.01"
+          inputmode="decimal"
+        >
+        <button class="btn-primary" id="btn-save-settings">
+          💾 Simpan Baki Awal
+        </button>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Pemberitahuan -->
+      <div class="settings-section">
+        <label>🔔 Pemberitahuan</label>
+        <button class="btn-primary" id="btn-request-notif">
+          Hidupkan Pemberitahuan
+        </button>
+        <p class="notif-status" id="notif-status">Menyemak kebenaran...</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Padam Data -->
+      <div class="settings-section">
+        <label>⚠️ Zon Bahaya</label>
+        <button class="btn-danger" id="btn-reset">
+          🗑️ Padam Semua Data
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================================================
+       BANNER KEMASKINI
+       Muncul apabila terdapat versi Service Worker terbaharu
+       ====================================================== -->
+  <div id="update-banner">
+    <span>🔄 Versi baharu tersedia!</span>
+    <button
+      style="background:white; color:#1a237e; border:none; padding:6px 12px; border-radius:20px; font-weight:bold; cursor:pointer;"
+      id="btn-update"
+    >
+      Kemaskini
+    </button>
+  </div>
+
+  <!-- Fail JavaScript utama kita -->
+  <script src="app.js"></script>
+</body>
+</html>
