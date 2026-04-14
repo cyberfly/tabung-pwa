@@ -2,34 +2,25 @@
   <!-- Latar belakang hijau dengan sudut membulat -->
   <rect width="192" height="192" rx="24" fill="#4CAF50"/>
 
-  <!-- Badan celengan babi -->
-  <ellipse cx="96" cy="108" rx="55" ry="45" fill="white" opacity="0.95"/>
+  <!-- Kepala bayi -->
+  <circle cx="96" cy="84" r="38" fill="#FFE0B2"/>
 
-  <!-- Kepala celengan babi -->
-  <circle cx="145" cy="88" r="22" fill="white" opacity="0.95"/>
-
-  <!-- Hidung -->
-  <ellipse cx="155" cy="92" rx="9" ry="7" fill="#f8bbd0"/>
-  <circle cx="152" cy="91" r="2.5" fill="#c2185b"/>
-  <circle cx="158" cy="91" r="2.5" fill="#c2185b"/>
+  <!-- Rambut -->
+  <path d="M 86 49 C 90 38 105 36 109 47" stroke="#6D4C41" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M 94 44 C 106 33 121 44 118 57" stroke="#6D4C41" stroke-width="6" fill="none" stroke-linecap="round"/>
 
   <!-- Mata -->
-  <circle cx="141" cy="82" r="3" fill="#333"/>
-  <circle cx="142" cy="81" r="1" fill="white"/>
+  <circle cx="82" cy="82" r="4" fill="#4E342E"/>
+  <circle cx="110" cy="82" r="4" fill="#4E342E"/>
 
-  <!-- Telinga -->
-  <ellipse cx="133" cy="70" rx="8" ry="6" fill="white" opacity="0.95"/>
-  <ellipse cx="133" cy="70" rx="5" ry="4" fill="#f8bbd0"/>
+  <!-- Mulut -->
+  <path d="M 86 100 Q 96 108 106 100" stroke="#E57373" stroke-width="5" fill="none" stroke-linecap="round"/>
 
-  <!-- Slot koin di atas -->
-  <rect x="80" y="60" width="28" height="6" rx="3" fill="#388E3C"/>
+  <!-- Bedung / badan -->
+  <path d="M 58 144 C 62 114 78 100 96 100 C 114 100 130 114 134 144 Z" fill="white" opacity="0.96"/>
+  <path d="M 84 108 L 109 144" stroke="#81C784" stroke-width="6" stroke-linecap="round"/>
 
-  <!-- Kaki celengan -->
-  <rect x="62" y="146" width="14" height="12" rx="5" fill="white" opacity="0.9"/>
-  <rect x="82" y="148" width="14" height="10" rx="5" fill="white" opacity="0.9"/>
-  <rect x="102" y="148" width="14" height="10" rx="5" fill="white" opacity="0.9"/>
-  <rect x="118" y="146" width="14" height="12" rx="5" fill="white" opacity="0.9"/>
-
-  <!-- Ekor -->
-  <path d="M 45 105 Q 35 95 40 85 Q 45 75 38 70" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+  <!-- Tangan -->
+  <circle cx="63" cy="121" r="9" fill="#FFE0B2"/>
+  <circle cx="129" cy="121" r="9" fill="#FFE0B2"/>
 </svg>

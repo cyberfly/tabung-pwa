@@ -187,7 +187,7 @@ function renderHistory(transactions) {
   if (transactions.length === 0) {
     container.innerHTML = `
       <div class="history-empty">
-        <div class="empty-icon">🐷</div>
+        <div class="empty-icon">👶</div>
         <p>Tiada rekod lagi</p>
         <p>Jom mula menyimpan!</p>
       </div>

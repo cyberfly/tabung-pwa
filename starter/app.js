@@ -139,7 +139,7 @@ function renderBalance(balance) {
  * Panduan:
  * - Cari elemen: document.getElementById('history-list')
  * - Jika transactions.length === 0, paparkan mesej kosong:
- *     '<div class="history-empty"><div class="empty-icon">🐷</div>
+ *     '<div class="history-empty"><div class="empty-icon">👶</div>
  *      <p>Tiada rekod lagi</p><p>Jom mula menyimpan!</p></div>'
  * - Jika ada transaksi:
  *   a. Balikkan urutan: [...transactions].reverse()
