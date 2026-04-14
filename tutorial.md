@@ -210,7 +210,8 @@ Fail ini adalah "kad pengenalan" aplikasi. Pelayar membaca fail ini untuk tahu c
   "name": "Tabungku",
   "short_name": "Tabungku",
   "description": "Aplikasi tabungan mudah untuk merekod simpanan dan pengeluaran wang",
-  "start_url": "/tabungan-pwa/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4CAF50",
@@ -232,7 +233,8 @@ Fail ini adalah "kad pengenalan" aplikasi. Pelayar membaca fail ini untuk tahu c
 |---|---|---|
 | `name` | Nama penuh aplikasi | "Tabungku" |
 | `short_name` | Nama di skrin utama (maks 12 aksara) | "Tabungku" |
-| `start_url` | URL yang dibuka apabila ikon diklik | "/tabungan-pwa/" |
+| `start_url` | URL yang dibuka apabila ikon diklik | `"./"` |
+| `scope` | Had URL yang dianggap sebahagian daripada aplikasi | `"./"` |
 | `display` | Paparan tetingkap | `"standalone"` = tanpa bar alamat |
 | `theme_color` | Warna bar header pelayar | `"#4CAF50"` (hijau) |
 | `background_color` | Warna skrin splash | `"#ffffff"` |
